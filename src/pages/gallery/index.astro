@@ -1,0 +1,67 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const allImages = (await getCollection("images")).filter((i) => i.data.publish);
+---
+
+<Base title="Gallery">
+  <h1>Gallery</h1>
+  <p style="color: var(--text-muted); margin-bottom: 2rem;">
+    Maps, illustrations, and artifacts from Udroth.
+  </p>
+
+  <div class="gallery-grid">
+    {allImages.map((img) => (
+      <a href={`/gallery/${img.id}`} class="gallery-card">
+        {img.data.image_file && (
+          <img
+            src={`/assets/thumbs/${img.data.image_file.replace(/\.[^.]+$/, '.webp')}`}
+            alt={img.data.title}
+            loading="lazy"
+          />
+        )}
+        <div class="gallery-info">
+          <h3>{img.data.title}</h3>
+          {img.data.caption && <p>{img.data.caption}</p>}
+        </div>
+      </a>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .gallery-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.2s;
+  }
+  .gallery-card:hover {
+    box-shadow: 0 4px 20px rgba(58, 46, 31, 0.12);
+    transform: translateY(-2px);
+  }
+  .gallery-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-info {
+    padding: 1rem 1.2rem;
+  }
+  .gallery-info h3 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  .gallery-info p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+</style>

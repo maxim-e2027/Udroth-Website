@@ -1,0 +1,39 @@
+---
+import { chipsFor } from "../lib/wikilinks";
+import { FACET_TO_CATEGORY } from "../content.config";
+
+interface Props {
+  facet: keyof typeof FACET_TO_CATEGORY;
+  values: string[];
+}
+const { facet, values } = Astro.props;
+const chips = await chipsFor(facet, values);
+---
+
+{chips.length > 0 && (
+  <span class="facet-chips">
+    {chips.map((c) => (
+      c.href
+        ? <a href={c.href} class="tag" data-facet={c.facet}>{c.display}</a>
+        : <span class="tag tag-unresolved" title="No article">{c.display}</span>
+    ))}
+  </span>
+)}
+
+<style>
+  .facet-chips {
+    display: contents;
+  }
+  a.tag {
+    border-bottom: none;
+    color: var(--text-muted);
+  }
+  a.tag:hover {
+    color: var(--accent);
+    background: var(--bg);
+  }
+  .tag-unresolved {
+    opacity: 0.55;
+    text-decoration: line-through;
+  }
+</style>

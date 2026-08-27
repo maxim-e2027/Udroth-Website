@@ -1,0 +1,18 @@
+{
+  "name": "udroth-website",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "gen-thumbs": "sh scripts/gen-thumbs.sh",
+    "sync-assets": "npm run gen-thumbs && rm -rf public/assets && mkdir -p public/assets && cp -r assets/* public/assets/",
+    "dev": "npm run sync-assets && astro dev",
+    "build": "npm run sync-assets && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "remark-wiki-link": "^2.0.1"
+  }
+}

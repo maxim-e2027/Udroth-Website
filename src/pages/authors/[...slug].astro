@@ -1,0 +1,101 @@
+---
+import Base from "../../layouts/Base.astro";
+import FacetChips from "../../components/FacetChips.astro";
+import { getCollection } from "astro:content";
+import { parseWikilink, slugify } from "../../lib/wikilinks";
+
+export async function getStaticPaths() {
+  const authors = (await getCollection("authors")).filter((a) => a.data.publish);
+  return authors.map((author) => ({
+    params: { slug: author.id },
+    props: { author },
+  }));
+}
+
+const { author } = Astro.props;
+
+// Find all published texts where author field is [[Author Title]]
+const allTexts = (await getCollection("texts")).filter((t) => t.data.publish);
+const authorTexts = allTexts.filter((t) => {
+  const parsed = parseWikilink(t.data.author);
+  return parsed ? slugify(parsed.name) === slugify(author.data.title) : false;
+});
+---
+
+<Base title={author.data.title}>
+  <article>
+    <header class="author-header">
+      <span class="label">Author</span>
+      <h1>{author.data.title}</h1>
+      <div class="chips">
+        <FacetChips facet="era" values={author.data.era} />
+        <FacetChips facet="culture" values={author.data.culture} />
+      </div>
+      {author.data.description && (
+        <p class="description">{author.data.description}</p>
+      )}
+    </header>
+
+    <section class="works">
+      <h2>Works</h2>
+      {authorTexts.length > 0 ? (
+        <div class="card-grid">
+          {authorTexts.map((text) => (
+            <a href={`/texts/${text.id}`} class="card">
+              <h3>{text.data.title}</h3>
+              <div class="meta">
+                {text.data.subtype && <span>{text.data.subtype}</span>}
+                {text.data.date_in_world && <span> · {text.data.date_in_world}</span>}
+              </div>
+              {text.data.excerpt && <p class="excerpt">{text.data.excerpt}</p>}
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="empty">No published works on record.</p>
+      )}
+    </section>
+  </article>
+</Base>
+
+<style>
+  .author-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .label {
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .description {
+    color: var(--text-muted);
+    font-style: italic;
+    max-width: 680px;
+    margin-top: 0.5rem;
+  }
+
+  .works h2 {
+    margin-bottom: 1.2rem;
+  }
+
+  .empty {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+</style>

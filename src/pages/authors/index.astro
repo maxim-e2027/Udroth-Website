@@ -1,0 +1,29 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { displayName } from "../../lib/wikilinks";
+
+const allAuthors = (await getCollection("authors")).filter((a) => a.data.publish);
+---
+
+<Base title="Authors">
+  <h1>Authors</h1>
+  <p style="color: var(--text-muted); margin-bottom: 2rem;">
+    The scribes, commanders, and scholars who penned these documents.
+  </p>
+
+  <div class="card-grid">
+    {allAuthors.map((author) => (
+      <a href={`/authors/${author.id}`} class="card">
+        <h3>{author.data.title}</h3>
+        <div class="meta">
+          {author.data.era.map((e) => <span>{displayName(e)}</span>)}
+        </div>
+        {author.data.description && <p class="excerpt">{author.data.description}</p>}
+        <div class="tags">
+          {author.data.culture.map((c) => <span class="tag">{displayName(c)}</span>)}
+        </div>
+      </a>
+    ))}
+  </div>
+</Base>

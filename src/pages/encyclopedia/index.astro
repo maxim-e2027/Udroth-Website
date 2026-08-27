@@ -1,0 +1,82 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { ARTICLE_CATEGORIES, type ArticleCategory } from "../../content.config";
+
+const all = (await getCollection("articles")).filter((a) => a.data.publish);
+const counts: Record<ArticleCategory, number> = {
+  geography: 0, theology: 0, ethnography: 0, history: 0, themes: 0,
+};
+for (const a of all) counts[a.data.category]++;
+
+const CATEGORY_LABELS: Record<ArticleCategory, string> = {
+  geography: "Geography",
+  theology: "Theology",
+  ethnography: "Ethnography",
+  history: "History",
+  themes: "Themes",
+};
+
+const CATEGORY_DESCRIPTIONS: Record<ArticleCategory, string> = {
+  geography: "Regions, cities, rivers, and landmarks of Udroth.",
+  theology: "Religions, faiths, and cosmologies.",
+  ethnography: "Peoples, cultures, and customs.",
+  history: "Eras, empires, polities, and watershed events.",
+  themes: "Cross-cutting concepts and motifs.",
+};
+---
+
+<Base title="Encyclopedia">
+  <h1>Encyclopedia</h1>
+  <p style="color: var(--text-muted); margin-bottom: 2rem;">
+    A modern reader's reference to the world of Udroth.
+  </p>
+
+  <div class="category-grid">
+    {ARTICLE_CATEGORIES.map((cat) => (
+      <a href={`/encyclopedia/${cat}`} class="category-card">
+        <h2>{CATEGORY_LABELS[cat]}</h2>
+        <p class="cat-desc">{CATEGORY_DESCRIPTIONS[cat]}</p>
+        <span class="count">{counts[cat]} {counts[cat] === 1 ? "article" : "articles"}</span>
+      </a>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .category-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: box-shadow 0.3s, transform 0.2s;
+  }
+  .category-card:hover {
+    box-shadow: 0 4px 20px rgba(58, 46, 31, 0.12);
+    transform: translateY(-2px);
+    border-bottom-color: var(--border);
+  }
+  .category-card h2 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+  .cat-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    flex: 1;
+  }
+  .count {
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+</style>

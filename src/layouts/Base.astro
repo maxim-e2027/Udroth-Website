@@ -1,0 +1,269 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  docTitle?: string;
+}
+
+const { title, description = "Archives of Udroth — a world beneath the stone", docTitle } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title} — Udroth</title>
+
+    <!-- Fonts: Cinzel (headings) + Lora (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-main">
+        <a href="/" class="site-title">Udroth</a>
+        <nav>
+          <a href="/texts">Texts</a>
+          <a href="/gallery">Gallery</a>
+          <a href="/encyclopedia">Encyclopedia</a>
+          <a href="/authors">Authors</a>
+        </nav>
+      </div>
+      {docTitle && (
+        <div class="site-header-doc">
+          <span class="doc-label">Reading:</span>
+          <span class="doc-title">{docTitle}</span>
+        </div>
+      )}
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <p>Archives of Udroth</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  /* ── Palette: parchment & sepia ── */
+  :root {
+    --bg:          #f5ecd7;
+    --bg-dark:     #e8dcc6;
+    --text:        #3a2e1f;
+    --text-muted:  #7a6b57;
+    --accent:      #8b5e34;
+    --accent-dark: #6b4423;
+    --border:      #c9b896;
+    --card-bg:     #faf3e3;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 18px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: "Lora", Georgia, "Times New Roman", serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Cinzel", "Palatino Linotype", serif;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--accent-dark);
+  }
+
+  h1 { font-size: 2.4rem; margin-bottom: 0.6em; letter-spacing: 0.04em; }
+  h2 { font-size: 1.6rem; margin-bottom: 0.5em; }
+  h3 { font-size: 1.2rem; margin-bottom: 0.4em; }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  main {
+    flex: 1;
+    width: 90%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+
+  @media (max-width: 1024px) {
+    main {
+      width: 93%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    main {
+      width: 96%;
+      padding: 1.2rem 0;
+    }
+  }
+
+  /* ── Header ── */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-dark);
+    box-shadow: 0 2px 8px rgba(58, 46, 31, 0.08);
+  }
+
+  .site-header-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 2rem;
+  }
+
+  .site-header-doc {
+    padding: 0.35rem 2rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    font-family: "Cinzel", serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .doc-label {
+    text-transform: uppercase;
+    margin-right: 0.5rem;
+    opacity: 0.7;
+  }
+
+  .doc-title {
+    color: var(--accent-dark);
+  }
+
+  .site-title {
+    font-family: "Cinzel", serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    border-bottom: none;
+  }
+
+  .site-header nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .site-header nav a {
+    font-family: "Cinzel", serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .site-header nav a:hover {
+    color: var(--accent);
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── Cards ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    transition: box-shadow 0.3s, transform 0.2s;
+  }
+  .card:hover {
+    box-shadow: 0 4px 20px rgba(58, 46, 31, 0.12);
+    transform: translateY(-2px);
+  }
+  .card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.4rem;
+  }
+  .card .meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+  }
+  .card .excerpt {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* ── Tag pills ── */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+  }
+  .tag {
+    font-size: 0.7rem;
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  /* ── Prose (rendered markdown) ── */
+  .prose p { margin-bottom: 1em; }
+  .prose blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+</style>

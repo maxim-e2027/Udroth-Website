@@ -1,0 +1,101 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+import FacetChips from "../../components/FacetChips.astro";
+import { displayName } from "../../lib/wikilinks";
+
+export async function getStaticPaths() {
+  const texts = await getCollection("texts");
+  return texts
+    .filter((t) => t.data.publish)
+    .map((text) => ({ params: { slug: text.id }, props: { text } }));
+}
+
+const { text } = Astro.props;
+const { Content } = await render(text);
+const authorName = text.data.author ? displayName(text.data.author) : "";
+---
+
+<Base title={text.data.title} docTitle={text.data.title}>
+  <article>
+    <header class="text-header">
+      {text.data.subtype && <span class="subtype">{text.data.subtype}</span>}
+      <h1>{text.data.title}</h1>
+      <div class="meta-row">
+        {authorName && <span>by {authorName}</span>}
+        {text.data.date_in_world && <span> · {text.data.date_in_world}</span>}
+      </div>
+      <div class="tags">
+        <FacetChips facet="era" values={text.data.era} />
+        <FacetChips facet="culture" values={text.data.culture} />
+        <FacetChips facet="religion" values={text.data.religion} />
+        <FacetChips facet="politics" values={text.data.politics} />
+        <FacetChips facet="place" values={text.data.place} />
+      </div>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {text.data.tags.length > 0 && (
+      <aside class="block">
+        <h3>Themes</h3>
+        <div class="tags">
+          <FacetChips facet="tags" values={text.data.tags} />
+        </div>
+      </aside>
+    )}
+
+    {text.data.related_images.length > 0 && (
+      <aside class="block">
+        <h3>Related Maps & Images</h3>
+        <ul>
+          {text.data.related_images.map((img) => {
+            const name = displayName(img);
+            const slug = name.replace(/ /g, "-").toLowerCase();
+            return (
+              <li><a href={`/gallery/${slug}`}>{name}</a></li>
+            );
+          })}
+        </ul>
+      </aside>
+    )}
+  </article>
+</Base>
+
+<style>
+  .text-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .subtype {
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .meta-row {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+  .prose { max-width: 100%; }
+  .block {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .block ul {
+    list-style: none;
+    padding: 0;
+  }
+  .block li {
+    padding: 0.3rem 0;
+  }
+</style>

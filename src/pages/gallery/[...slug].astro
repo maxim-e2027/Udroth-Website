@@ -1,0 +1,106 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+import FacetChips from "../../components/FacetChips.astro";
+import { displayName } from "../../lib/wikilinks";
+
+export async function getStaticPaths() {
+  const images = await getCollection("images");
+  return images
+    .filter((i) => i.data.publish)
+    .map((img) => ({ params: { slug: img.id }, props: { img } }));
+}
+
+const { img } = Astro.props;
+const { Content } = await render(img);
+---
+
+<Base title={img.data.title}>
+  <article class="image-page">
+    {img.data.image_file && (
+      <figure>
+        <img src={`/assets/${img.data.image_file}`} alt={img.data.title} />
+      </figure>
+    )}
+
+    <div class="image-details">
+      {img.data.subtype && <span class="subtype">{img.data.subtype}</span>}
+      <h1>{img.data.title}</h1>
+      {img.data.caption && <p class="caption">{img.data.caption}</p>}
+
+      <div class="tags">
+        <FacetChips facet="place" values={img.data.place} />
+        <FacetChips facet="era" values={img.data.era} />
+        <FacetChips facet="culture" values={img.data.culture} />
+        <FacetChips facet="religion" values={img.data.religion} />
+        <FacetChips facet="politics" values={img.data.politics} />
+      </div>
+
+      {img.data.tags.length > 0 && (
+        <aside class="block">
+          <h3>Themes</h3>
+          <div class="tags">
+            <FacetChips facet="tags" values={img.data.tags} />
+          </div>
+        </aside>
+      )}
+
+      {img.data.related_texts.length > 0 && (
+        <aside class="block">
+          <h3>Related Texts</h3>
+          <ul>
+            {img.data.related_texts.map((t) => {
+              const name = displayName(t);
+              const slug = name.replace(/ /g, "-").toLowerCase();
+              return (
+                <li><a href={`/texts/${slug}`}>{name}</a></li>
+              );
+            })}
+          </ul>
+        </aside>
+      )}
+    </div>
+  </article>
+</Base>
+
+<style>
+  .image-page figure {
+    margin: 0 -1.5rem;
+    text-align: center;
+    background: #2a2318;
+    padding: 1rem;
+  }
+  .image-page figure img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+  }
+  .image-details {
+    margin-top: 2rem;
+  }
+  .subtype {
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .caption {
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+  }
+  .block {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .block ul {
+    list-style: none;
+    padding: 0;
+  }
+  .block li { padding: 0.3rem 0; }
+</style>

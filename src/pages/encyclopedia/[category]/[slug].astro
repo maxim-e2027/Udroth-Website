@@ -1,0 +1,139 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+import { ARTICLE_CATEGORIES, type ArticleCategory } from "../../../content.config";
+import { slugify, backreferences, displayName, articleHref } from "../../../lib/wikilinks";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+  return articles
+    .filter((a) => a.data.publish)
+    .map((a) => ({
+      params: { category: a.data.category, slug: slugify(a.data.title) },
+      props: { article: a },
+    }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const cat = article.data.category as ArticleCategory;
+
+const CATEGORY_LABELS: Record<ArticleCategory, string> = {
+  geography: "Geography",
+  theology: "Theology",
+  ethnography: "Ethnography",
+  history: "History",
+  themes: "Themes",
+};
+
+const { texts, images } = await backreferences(article.data.title);
+
+// Resolve related_articles hrefs ahead of render
+const related = await Promise.all(
+  article.data.related_articles.map(async (w) => ({
+    display: displayName(w),
+    href: await articleHref(w),
+  })),
+);
+---
+
+<Base title={article.data.title}>
+  <p style="margin-bottom: 0.5rem;">
+    <a href="/encyclopedia" style="color: var(--text-muted); font-size: 0.85rem;">Encyclopedia</a>
+    <span style="color: var(--text-muted); font-size: 0.85rem;"> / </span>
+    <a href={`/encyclopedia/${cat}`} style="color: var(--text-muted); font-size: 0.85rem;">{CATEGORY_LABELS[cat]}</a>
+  </p>
+
+  <article>
+    <header class="article-header">
+      <span class="category-pill">{CATEGORY_LABELS[cat]}</span>
+      <h1>{article.data.title}</h1>
+      {article.data.summary && <p class="summary">{article.data.summary}</p>}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {related.length > 0 && (
+      <aside class="block">
+        <h3>Related articles</h3>
+        <ul>
+          {related.map((r) => (
+            <li>
+              {r.href ? <a href={r.href}>{r.display}</a> : <span>{r.display}</span>}
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+
+    {texts.length > 0 && (
+      <aside class="block">
+        <h3>Mentioned in texts</h3>
+        <ul>
+          {texts.map((t) => (
+            <li>
+              <a href={`/texts/${t.id}`}>{t.data.title}</a>
+              {t.data.subtype && <span class="meta"> — {t.data.subtype}</span>}
+              {t.data.date_in_world && <span class="meta">, {t.data.date_in_world}</span>}
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+
+    {images.length > 0 && (
+      <aside class="block">
+        <h3>Related images</h3>
+        <ul>
+          {images.map((i) => (
+            <li>
+              <a href={`/gallery/${i.id}`}>{i.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </article>
+</Base>
+
+<style>
+  .article-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .category-pill {
+    font-family: "Cinzel", serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .summary {
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.6rem;
+    font-size: 1.02rem;
+  }
+  .prose { max-width: 100%; }
+  .block {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .block ul {
+    list-style: none;
+    padding: 0;
+  }
+  .block li {
+    padding: 0.3rem 0;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+</style>

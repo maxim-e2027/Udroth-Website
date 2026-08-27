@@ -1,0 +1,78 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { ARTICLE_CATEGORIES, type ArticleCategory } from "../../../content.config";
+import { slugify } from "../../../lib/wikilinks";
+
+export async function getStaticPaths() {
+  return ARTICLE_CATEGORIES.map((c) => ({ params: { category: c } }));
+}
+
+const { category } = Astro.params;
+const cat = category as ArticleCategory;
+
+const articles = (await getCollection("articles"))
+  .filter((a) => a.data.publish && a.data.category === cat)
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const CATEGORY_LABELS: Record<ArticleCategory, string> = {
+  geography: "Geography",
+  theology: "Theology",
+  ethnography: "Ethnography",
+  history: "History",
+  themes: "Themes",
+};
+---
+
+<Base title={CATEGORY_LABELS[cat]}>
+  <p style="margin-bottom: 0.5rem;">
+    <a href="/encyclopedia" style="color: var(--text-muted); font-size: 0.85rem;">← Encyclopedia</a>
+  </p>
+  <h1>{CATEGORY_LABELS[cat]}</h1>
+
+  {articles.length === 0 ? (
+    <p style="color: var(--text-muted); font-style: italic; margin-top: 2rem;">
+      No published articles yet in this category.
+    </p>
+  ) : (
+    <ul class="article-list">
+      {articles.map((a) => (
+        <li>
+          <a href={`/encyclopedia/${cat}/${slugify(a.data.title)}`}>
+            <span class="title">{a.data.title}</span>
+            {a.data.summary && <span class="summary"> — {a.data.summary}</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>
+
+<style>
+  .article-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+  }
+  .article-list li {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .article-list a {
+    border-bottom: none;
+    color: var(--text);
+  }
+  .article-list a:hover .title {
+    color: var(--accent);
+  }
+  .title {
+    font-family: "Cinzel", serif;
+    font-size: 1rem;
+    color: var(--accent-dark);
+    letter-spacing: 0.04em;
+  }
+  .summary {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { displayName } from "../../lib/wikilinks";
+
+const allTexts = (await getCollection("texts")).filter((t) => t.data.publish);
+---
+
+<Base title="Texts">
+  <h1>Texts</h1>
+  <p style="color: var(--text-muted); margin-bottom: 2rem;">
+    Stories, proclamations, and chronicles from within the world.
+  </p>
+
+  <div class="card-grid">
+    {allTexts.map((text) => (
+      <a href={`/texts/${text.id}`} class="card">
+        <h3>{text.data.title}</h3>
+        <div class="meta">
+          {text.data.subtype && <span>{text.data.subtype}</span>}
+          {text.data.date_in_world && <span> · {text.data.date_in_world}</span>}
+        </div>
+        {text.data.excerpt && <p class="excerpt">{text.data.excerpt}</p>}
+        <div class="tags">
+          {text.data.era.map((e) => <span class="tag">{displayName(e)}</span>)}
+          {text.data.culture.map((c) => <span class="tag">{displayName(c)}</span>)}
+          {text.data.religion.map((r) => <span class="tag">{displayName(r)}</span>)}
+        </div>
+      </a>
+    ))}
+  </div>
+</Base>
