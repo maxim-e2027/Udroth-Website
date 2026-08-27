@@ -7,12 +7,14 @@
     "sync-assets": "npm run gen-thumbs && rm -rf public/assets && mkdir -p public/assets && cp -r assets/* public/assets/",
     "dev": "npm run sync-assets && astro dev",
     "build": "npm run sync-assets && astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "astro": "^5.0.0"
   },
   "devDependencies": {
-    "remark-wiki-link": "^2.0.1"
+    "remark-wiki-link": "^2.0.1",
+    "wrangler": "^4.0.0"
   }
 }
