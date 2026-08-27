@@ -7,6 +7,13 @@ set -e
 ASSETS_DIR="$(dirname "$0")/../assets"
 THUMBS_DIR="$ASSETS_DIR/thumbs"
 
+# Thumbnails are committed to the repo. If ImageMagick is missing (e.g. on a
+# hosting build runner), keep the committed ones and carry on instead of failing.
+if ! command -v convert >/dev/null 2>&1; then
+  echo "gen-thumbs: ImageMagick not found - using committed thumbnails as-is."
+  exit 0
+fi
+
 mkdir -p "$THUMBS_DIR"
 
 count=0
