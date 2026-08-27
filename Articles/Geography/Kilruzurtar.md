@@ -10,7 +10,7 @@ Kilruzurtar lies in the northwest of Udroth. In all times it was the most isolat
 
 The ecosystem of Kilruzurtar is unlike all others in Udroth. As there is no sunlight or volcanoes suitable for pyroflora, the only source of energy is the decomposition of the corpse of Dhin. For this reason fungi fulfill the role of trees in this strange land. 
 
-In the center of Kilruzurtar lies the Rakzin Sea, which is the source of the [Great River](Geography), that flows through most of Udroth. The world's ceiling is low there, and therefore the climate is very humid, with frequent rains and mists.
+In the center of Kilruzurtar lies the Rakzin Sea, which is the source of the [[Great River]], that flows through most of Udroth. The world's ceiling is low there, and therefore the climate is very humid, with frequent rains and mists.
 
 In the south dense mountains separate Kilruzurtar from [Upper Kwod](Kwod), while in the northeast the great misty emptiness of Titzintar separates it from Aeatör Vales in Dhinaem.
 
