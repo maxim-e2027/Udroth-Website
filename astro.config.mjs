@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import remarkWikiLink from "remark-wiki-link";
+import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   site: "https://udroth.world", // placeholder — update when domain is chosen
@@ -18,6 +19,7 @@ export default defineConfig({
       ],
     ],
   },
+  integrations: [sitemap()],
   vite: {
     server: {
       watch: {
