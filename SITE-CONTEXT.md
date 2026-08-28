@@ -21,8 +21,8 @@
 | Контент | Content Collections + Zod-схемы (`src/content.config.ts`) |
 | Wikilinks | `remark-wiki-link` — `[[Name]]` → ссылка через `/wiki/<slug>` |
 | Шрифты | Google Fonts: **Cinzel** (заголовки) + **Lora** (текст) |
-| Деплой | Пока не настроен. Планируется Cloudflare Pages или Vercel |
-| Домен | Placeholder `udroth.world` в `astro.config.mjs` |
+| Деплой | Cloudflare (git-интеграция, автодеплой по push в main) |
+| Домен | `udroth.net` (зарегистрирован, подключён через Cloudflare) |
 | Dev | `npm run dev` → `localhost:4321` |
 | Build | `npm run build` |
 
@@ -201,7 +201,7 @@ publish: false
 1. **Наполнение статей** — все 38 stub-ов пусты. Theme-статьи вроде Speech / Regional Map / Geography — кандидаты на удаление (это типология артефактов, а не концепты мира). Решение по каждой за Alexey.
 2. **Кастомные шрифты** — резьба по камню, чеканка по металлу, граффити. Calligraphr → FontForge.
 3. **Раздел Geography** — интерактивная карта-хаб (SVG или Leaflet) поверх существующих Geography-статей.
-4. **Деплой** — Cloudflare Pages или Vercel.
+4. **Продвижение** — SEO-база (sitemap, OG-теги) готова; см. чек-лист сообществ для публикации.
 
 ---
 

@@ -3,7 +3,7 @@ import remarkWikiLink from "remark-wiki-link";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://udroth.world", // placeholder — update when domain is chosen
+  site: "https://udroth.net", // production domain
   markdown: {
     syntaxHighlight: false,
     remarkPlugins: [

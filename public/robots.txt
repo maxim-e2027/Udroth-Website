@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://udroth.world/sitemap-index.xml
+Sitemap: https://udroth.net/sitemap-index.xml
