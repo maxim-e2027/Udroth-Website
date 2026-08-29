@@ -16,7 +16,6 @@ religion:
   - "[[Dhinism]]"
 tags:
   - "[[Regional Map]]"
-  - "[[Geography]]"
 related_texts:
   - "[[Proclamation-of-the-Third-Aethliri-Empire]]"
 publish: true

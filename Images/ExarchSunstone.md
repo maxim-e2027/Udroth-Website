@@ -13,7 +13,7 @@ culture:
 politics:
   - "[[Exarchate of Koldwealm]]"
 religion:
-  - "[[Star Worship]]"
+  - "[[Dhinism]]"
   - "[[Kolmwadh Cult]]"
 tags: []
 related_texts: []

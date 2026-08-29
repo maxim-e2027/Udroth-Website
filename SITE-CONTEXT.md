@@ -181,27 +181,34 @@ publish: false
 
 ## Текущий контент
 
-**Тексты (3):** Proclamation-of-the-Third-Aethliri-Empire, Address-to-Debke-Wadam-Garrison, Unified-Magic-a-Manifesto.
+_Актуализировано 2026-08-29, вторая правка того же дня (наполнение по списку Alexey)._
 
-**Изображения (5):** Udroth-Complete-Map, Dhinaem-Map, Izbred-Map, Kilruzutar-Map, Urandayed-Map.
+**Тексты (5):** Proclamation-of-the-Third-Aethliri-Empire, Address-to-Debke-Wadam-Garrison, Unified-Magic-a-Manifesto, Among-the-Moles, Foundations-of-Metatheology.
 
-**Авторы (3):** Öraethin of Izbred, Öthenar Maelorith, Unified Magic Society of Udroth.
+**Изображения (15):** Udroth-Complete-Map, Dhinaem-Map, Izbred-Map, Kilruzutar-Map, Urandayed-Map, AalyranShrine, ExarchSunstone, HeroShrine, HolyVale, IgninomiconArazymar, IgninomiconMzurabil, IgninomiconUran, IgninomiconYrdhuna, IgninomiconZunarydh, IgniomiconZaymarub.
 
-**Статьи (38 stub-ов, все publish: true с пустым body):**
-- Geography (10): Debkemewd, Hildrend, Ranga, Izbred, Aethlirin, Dhinaem, Kilruzurtar, Kwod, Arwadek, Urandayed
-- Theology (4): Dhinism, Syncretic Teachings, Goblin Faiths, Uranism
-- Ethnography (3): Aethlir, Yanadr, Kilruz
-- History (6): Age of Chaos, Age of History, Aethliri Empire, Exarchate of Nemerwod, Third Aethliri Empire, Urmyzhar Empire
-- Themes (15): Speech, Fall of Empire, Imperial Idea, Goblin Invasion, Decree, Reunification, Centralization, Magic, Metatheology, Cross-Faith, Empiricism, Regional Map, Geography, World Map, Great River
+**Авторы (5):** Öraethin of Izbred, Öthenar Maelorith, Unified Magic Society of Udroth, Dhumman Garnkfel, Udvaz Mzurab-Nazbar.
+
+**Статьи (48, все publish: true). Написано — 5, пустых stub-ов — 43:**
+- Geography (14): Dhinaem ✓, Great River ✓, Kilruzurtar ✓, Aethlirin ✓, Debkemewd, Hildrend, Ranga, Izbred, Kwod, Arwadek, Urandayed, Photoflora, Pyroflora, Caligoflora
+- Theology (14): Dhinism, Uranism, Aradh Cults, Metatheology, Izbredic Hero Cult, Kolmwadh Cult, Kilruz Faiths (переим. из Goblin Faiths), Syncretic Faiths (переим. из Syncretic Teachings), Old Gods (= Uran's Court), The Stars (= Dhin's Court), Aradh (демоны — отдельно от Aradh Cults, культа вокруг них), The Heroes, Kilruz Prophets, Miscellaneous Spirits
+- Ethnography (4): Yanadr ✓ (содержит все ветви — Uranic/Izbredic Yanadr и Dirrha — как подразделы одной статьи, не отдельные статьи), Aethlir, Kilruz, Kwoden
+- History (14): Age of Chaos, Age of Creation, Age of History, Aethliri Empire, First Aethliri Empire, Second Aethliri Empire, Third Aethliri Empire, Shaethliri Empire, Exarchate of Nemerwod, Exarchate of Koldwealm, Urmyzhar Empire, Urandayedic Confederation, The Great Sealing, Zurkan Invasions
+- Themes (2): Magic, Regional Map — 13 из старых 15 удалены (были типологией артефакта, не концептами мира)
+
+Все обратные ссылки (facet/tag wikilinks) резолвятся — 0 битых на 2026-08-29.
 
 ---
 
 ## Следующие задачи (открытые)
 
-1. **Наполнение статей** — все 38 stub-ов пусты. Theme-статьи вроде Speech / Regional Map / Geography — кандидаты на удаление (это типология артефактов, а не концепты мира). Решение по каждой за Alexey.
-2. **Кастомные шрифты** — резьба по камню, чеканка по металлу, граффити. Calligraphr → FontForge.
-3. **Раздел Geography** — интерактивная карта-хаб (SVG или Leaflet) поверх существующих Geography-статей.
-4. **Продвижение** — SEO-база (sitemap, OG-теги) готова; см. чек-лист сообществ для публикации.
+1. **Наполнение статей** — 28 из 33 stub-ов пусты (список — выше). В `~/Documents/Claude/Projects/Worldbuilding/` есть неиспользованные источники: `WorldbuildingContext.md` (регионы, народы, космология, история) и два docx — `History of Urmyzhar Empire.docx`, `Peoples of Dhinaem.docx` — можно опираться на них вместо придумывания с нуля.
+2. **Поиск и фильтры** — на сайте нет ни полнотекстового поиска, ни фильтров по фасетам (`texts/index.astro`, `gallery/index.astro` — статичные сетки без JS). План: Pagefind для полнотекстового поиска + UI-чипсы по существующим фасетам + новое поле `date_added` во frontmatter для сортировки по новизне (обсуждено с Alexey 2026-08-29).
+3. **Кастомные шрифты** — резьба по камню, чеканка по металлу, граффити. Calligraphr → FontForge.
+4. **Раздел Geography** — интерактивная карта-хаб (SVG или Leaflet) поверх существующих Geography-статей.
+5. **Продвижение** — SEO-база (sitemap, OG-теги) готова; см. чек-лист сообществ для публикации.
+6. **Favicon и 404-страница** — оба отсутствуют в `public/`.
+7. **Приватная аналитика** — отложено намеренно, вернуться позже.
 
 ---
 

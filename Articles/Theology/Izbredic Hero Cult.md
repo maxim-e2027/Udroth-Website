@@ -1,7 +1,7 @@
 ---
-title: Zurkan Invasions
+title: "Izbredic Hero Cult"
 type: article
-category: history
+category: theology
 summary: ""
 related_articles: []
 publish: true

@@ -12,11 +12,10 @@ culture:
   - "[[Kilruz]]"
 politics: []
 religion:
-  - "[[Goblin Faiths]]"
+  - "[[Kilruz Faiths]]"
 
 tags:
   - "[[Regional Map]]"
-  - "[[Geography]]"
 related_texts: []
 publish: true
 ---

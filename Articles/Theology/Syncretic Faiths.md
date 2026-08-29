@@ -1,5 +1,5 @@
 ---
-title: "Syncretic Teachings"
+title: "Syncretic Faiths"
 type: article
 category: theology
 summary: ""

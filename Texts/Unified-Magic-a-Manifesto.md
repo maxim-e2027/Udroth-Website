@@ -11,7 +11,7 @@ era:
 culture: []
 politics: []
 religion:
-  - "[[Syncretic Teachings]]"
+  - "[[Syncretic Faiths]]"
 tags:
   - "[[Metatheology]]"
 related_images:

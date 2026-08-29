@@ -20,7 +20,6 @@ politics:
 religion:
   - "[[Dhinism]]"
 tags:
-  - "[[Centralization]]"
 related_images:
   - "[[Izbred-Map]]"
   - "[[Dhinaem-Map]]"

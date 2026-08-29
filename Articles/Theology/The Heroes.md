@@ -1,5 +1,5 @@
 ---
-title: "Goblin Faiths"
+title: "The Heroes"
 type: article
 category: theology
 summary: ""
@@ -8,3 +8,4 @@ publish: true
 ---
 
 <!-- Stub. Meta voice — external reference, not in-world. -->
+

@@ -18,8 +18,6 @@ politics: []
 religion: []
 
 tags:
-  - "[[World Map]]"
-  - "[[Geography]]"
   - "[[Great River]]"
 related_texts:
   - "[[Unified-Magic-a-Manifesto]]"

@@ -1,7 +1,7 @@
 ---
-title: Zurkan Invasions
+title: "Kwoden"
 type: article
-category: history
+category: ethnography
 summary: ""
 related_articles: []
 publish: true

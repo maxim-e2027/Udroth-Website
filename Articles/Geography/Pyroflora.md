@@ -1,7 +1,7 @@
 ---
-title: Zurkan Invasions
+title: "Pyroflora"
 type: article
-category: history
+category: geography
 summary: ""
 related_articles: []
 publish: true
