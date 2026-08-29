@@ -19,7 +19,7 @@ politics:
   - "[[Third Aethliri Empire]]"
 religion:
   - "[[Dhinism]]"
-tags:
+tags: []
 related_images:
   - "[[Izbred-Map]]"
   - "[[Dhinaem-Map]]"
