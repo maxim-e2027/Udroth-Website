@@ -1,10 +1,10 @@
 ---
-title: "Izbred"
+title: "Exarchate"
 type: article
-category: geography
+category: history
 summary: ""
 related_articles: []
 publish: true
 ---
-Izbred lies in the east of Udroth. 
+
 <!-- Stub. Meta voice — external reference, not in-world. -->

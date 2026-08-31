@@ -1,10 +1,10 @@
 ---
-title: "Izbred"
+title: "War of the Wyrms"
 type: article
-category: geography
+category: history
 summary: ""
 related_articles: []
 publish: true
 ---
-Izbred lies in the east of Udroth. 
+
 <!-- Stub. Meta voice — external reference, not in-world. -->
