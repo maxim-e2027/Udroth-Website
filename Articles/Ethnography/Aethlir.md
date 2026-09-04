@@ -6,9 +6,9 @@ summary: ""
 related_articles: []
 publish: true
 ---
-The aethlir came third of the peoples into Udroth together with [Dhin Sunwyrm](<The Stars>) to combat the [[Demonic Invasion]]. At the end of the [[Age of Creation]] when the [[Aradh]] were defeated, and the [[Old Gods]] had fled, the aethlir founded the [[First Aethliri Empire]].
+The aethlir came third of the peoples into Udroth together with [[The Stars|Dhin Sunwyrm]] to combat the [[Demonic Invasion]]. At the end of the [[Age of Creation]] when the [[Aradh]] were defeated, and the [[Old Gods]] had fled, the aethlir founded the [[First Aethliri Empire]].
 
-They prefer to live, where light of the [Sun and Stars](<The Stars>) can be seen. They can be found in largest numbers in [[Dhinaem]], but are also notably present in [[Izbred]] and in the [[Kwod]]. Some of their peoples migrated into [[Izbred]] during the [[Age of History]] during the times of the [Second](<Second Aethliri Empire>) and the [Third](<Third Aethliri Empire>) Aethliri Empires, because it was a sparsely populated land that had sunlight, much sought after by the aethlir. And in the [[Kwod]] aethlir are mostly remnants of imperial legions and [Exarchates](Exarchate). 
+They prefer to live, where light of the [[The Stars|Sun and Stars]] can be seen. They can be found in largest numbers in [[Dhinaem]], but are also notably present in [[Izbred]] and in the [[Kwod]]. Some of their peoples migrated into [[Izbred]] during the [[Age of History]] during the times of the [[Second Aethliri Empire|Second]] and the [[Third Aethliri Empire|Third]] Aethliri Empires, because it was a sparsely populated land that had sunlight, much sought after by the aethlir. And in the [[Kwod]] aethlir are mostly remnants of imperial legions and [[Exarchate|Exarchates]]. 
 
 In all lands of Udroth have intermarried into local families in time of the [[Aethliri Empire]] and therefore many noble families even outside [[Dhinaem]] can track their lineage to some aethlir. 
 

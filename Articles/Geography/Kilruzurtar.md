@@ -12,7 +12,7 @@ The ecosystem of Kilruzurtar is unlike all others in Udroth. As there is no sunl
 
 In the center of Kilruzurtar lies the Rakzin Sea, which is the source of the [[Great River]], that flows through most of Udroth. The world's ceiling is low there, and therefore the climate is very humid, with frequent rains and mists.
 
-In the south dense mountains separate Kilruzurtar from [Upper Kwod](Kwod), while in the northeast the great misty emptiness of Titzintar separates it from Aeatör Vales in Dhinaem.
+In the south dense mountains separate Kilruzurtar from [[Kwod|Upper Kwod]], while in the northeast the great misty emptiness of Titzintar separates it from Aeatör Vales in Dhinaem.
 
 There are 3 large subregions of Kilruzurtar:
 - **Zurzin**(*Coils of Zin*) in the west. There the corpse of Zin forms many rings that pierce the landscape. 

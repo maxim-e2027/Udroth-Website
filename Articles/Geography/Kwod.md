@@ -6,7 +6,7 @@ summary: ""
 related_articles: []
 publish: true
 ---
-Kwod, "the Exile" in the language of [[Kwoden]] is the land by the [[Great River]] connecting Kilruzurtar with [[Arwadek]], [[Dhinaem]] and [[Izbred]]. It is composed of two main parts: Upper Kwod in the west and Lower Kwod in the east. Most of its population is [kwoden](Kwoden)
+Kwod, "the Exile" in the language of [[Kwoden]] is the land by the [[Great River]] connecting Kilruzurtar with [[Arwadek]], [[Dhinaem]] and [[Izbred]]. It is composed of two main parts: Upper Kwod in the west and Lower Kwod in the east. Most of its population is [[Kwoden|kwoden]]
 
 Sunlight is very scarce in the Kwod, and [[Photoflora]] is extremely rare. Most ecosystems are made of [[Caligoflora]] revolve around nutrients carried by the Great River. Food often has to be imported from other regions. 
 

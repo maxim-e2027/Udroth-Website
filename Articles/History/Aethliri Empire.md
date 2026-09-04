@@ -6,14 +6,14 @@ summary: ""
 related_articles: []
 publish: true
 ---
-Aethliri Empire(a.k.a. the Empire) is a collective name for several consecutive large polities centered around the figure of the aethliri emperor, [worship of Dhin and the Stars](Dhinism), and the aspiration to control all Udroth. The end of the Aethliri Empire marked the end of the [[Age of History]] and the beginning of the [[Age of Chaos]]. 
+Aethliri Empire(a.k.a. the Empire) is a collective name for several consecutive large polities centered around the figure of the aethliri emperor, [[Dhinism|worship of Dhin and the Stars]], and the aspiration to control all Udroth. The end of the Aethliri Empire marked the end of the [[Age of History]] and the beginning of the [[Age of Chaos]]. 
 
 Aethliri empires during their history had various forms of organizations, and changes in these forms were often accompanied by periods of worldwide unrest.At its highest extent, which was maintained for most of the [[Age of History]], it controlled all of Udroth, except [[Kilruzurtar]]. 
 
 There were 3 Aethliri Empires during the [[Age of History]], and 3 noteworthy rump states during the [[Age of Chaos]]
 
-- [[First Aethliri Empire]] – The first and most centralized of the Aethliri Empires. Founded after [dhinic](Dhinism) victory in the [War of the Wyrms](Age of Creation) and ended in the Dragon War.
-- [[Second Aethliri Empire]] – Successor to the First Empire, during which [exarchs](Exarchate) of remote regions held much power. Ended in the Exarch Wars.
+- [[First Aethliri Empire]] – The first and most centralized of the Aethliri Empires. Founded after [[Dhinism|dhinic]] victory in the [[Age of Creation|War of the Wyrms]] and ended in the Dragon War.
+- [[Second Aethliri Empire]] – Successor to the First Empire, during which [[Exarchate|exarchs]] of remote regions held much power. Ended in the Exarch Wars.
 - [[Third Aethliri Empire]] – Successor to the Second Empire, characterized by minor local governors, regional civil wars, and birth of the Senate. Ended by [[The Great Sealing]] during [[Zurkan Invasions]].
   
 - **Möthnaerin Stewarship** – After [[The Great Sealing]] the Senate decided that no emperor could be crowned due to inability of one to receive Approval of the Stars after Aethlirin disappeared. Functions as a confederative republic. 
