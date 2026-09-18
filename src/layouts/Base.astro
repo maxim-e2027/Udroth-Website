@@ -27,6 +27,11 @@ const socialImageURL = new URL(image, Astro.site);
     <title>{pageTitle}</title>
     <link rel="canonical" href={canonicalURL} />
 
+    <!-- Favicon (source drawing: assets/TwoWyrmsU.svg) -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Archives of Udroth" />
