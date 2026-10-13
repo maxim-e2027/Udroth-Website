@@ -12,6 +12,7 @@ politics: []
 religion: ["[[Uranism]]"]
 tags:     ["[[Metatheology]]", "[[Magic]]"]
 related_images: []
+date_added: 2026-08-27
 publish: true
 ---
 

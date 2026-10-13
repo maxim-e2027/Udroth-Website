@@ -3,6 +3,7 @@ import Base from "../../layouts/Base.astro";
 import { getCollection, render } from "astro:content";
 import FacetChips from "../../components/FacetChips.astro";
 import { displayName } from "../../lib/wikilinks";
+import { parseInWorldDate } from "../../lib/archive";
 
 export async function getStaticPaths() {
   const texts = await getCollection("texts");
@@ -14,10 +15,14 @@ export async function getStaticPaths() {
 const { text } = Astro.props;
 const { Content } = await render(text);
 const authorName = text.data.author ? displayName(text.data.author) : "";
+const iw = parseInWorldDate(text.data.date_in_world);
 ---
 
 <Base title={text.data.title} docTitle={text.data.title}>
-  <article>
+  <article data-pagefind-body>
+    <meta data-pagefind-filter="Section[content]" content="Texts" />
+    {authorName && <meta data-pagefind-filter="Author[content]" content={authorName} />}
+    {iw && <meta data-pagefind-filter="In-world age[content]" content={iw.age} />}
     <header class="text-header">
       {text.data.subtype && <span class="subtype">{text.data.subtype}</span>}
       <h1>{text.data.title}</h1>
@@ -39,7 +44,7 @@ const authorName = text.data.author ? displayName(text.data.author) : "";
     </div>
 
     {text.data.tags.length > 0 && (
-      <aside class="block">
+      <aside class="block" data-pagefind-ignore>
         <h3>Themes</h3>
         <div class="tags">
           <FacetChips facet="tags" values={text.data.tags} />
@@ -48,7 +53,7 @@ const authorName = text.data.author ? displayName(text.data.author) : "";
     )}
 
     {text.data.related_images.length > 0 && (
-      <aside class="block">
+      <aside class="block" data-pagefind-ignore>
         <h3>Related Maps & Images</h3>
         <ul>
           {text.data.related_images.map((img) => {

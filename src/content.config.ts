@@ -1,5 +1,6 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
+import { IMAGE_TYPES, isValidInWorldDate } from "./lib/archive";
 
 /* ── Wikilink: "[[Some Name]]" or "[[Some Name|alias]]" ── */
 const wikilink = z
@@ -9,6 +10,29 @@ const wikilink = z
   });
 
 const wikilinks = z.array(wikilink).default([]);
+
+/* ── Upload date: `date_added: 2026-08-27`. Empty is allowed (sorts last). ── */
+const dateAdded = z.preprocess(
+  (v) => (v === "" || v === null ? undefined : v),
+  z.coerce.date({ message: "date_added must be a date like 2026-08-27" }).optional(),
+);
+
+/* ── In-world date: "226 Age of Chaos", "c. 226 Age of Chaos", "Age of Chaos", "Unknown" ── */
+const inWorldDate = z.preprocess(
+  (v) => (v === null || v === undefined ? "" : String(v)),
+  z.string().refine(isValidInWorldDate, {
+    message:
+      'date_in_world must look like "226 Age of Chaos", "c. 226 Age of Chaos", "Age of Chaos" or "Unknown" (ages: Creation, History, Chaos)',
+  }),
+);
+
+/* ── Image type: one of IMAGE_TYPES (see src/lib/archive.ts), or empty ── */
+const imageType = z.preprocess(
+  (v) => (v === null || v === undefined ? "" : String(v).trim().toLowerCase()),
+  z.string().refine((v) => v === "" || (IMAGE_TYPES as readonly string[]).includes(v), {
+    message: `Image subtype must be one of: ${IMAGE_TYPES.join(", ")}`,
+  }),
+);
 
 /* ── Shared facets schema (5 attributes) — all wikilinks now ── */
 const facets = {
@@ -49,7 +73,8 @@ const texts = defineCollection({
     subtype: z.string().default(""),
     author: z.string().default(""), // wikilink to Author (not Article)
     excerpt: z.string().default(""),
-    date_in_world: z.string().default(""),
+    date_in_world: inWorldDate,
+    date_added: dateAdded,
     ...facets,
     tags: wikilinks, // → Themes articles
     related_images: z.array(z.string()).default([]),
@@ -62,7 +87,8 @@ const images = defineCollection({
   schema: z.object({
     title: z.string(),
     type: z.literal("image"),
-    subtype: z.string().default(""),
+    subtype: imageType,
+    date_added: dateAdded,
     image_file: z.string().default(""),
     caption: z.string().default(""),
     ...facets,

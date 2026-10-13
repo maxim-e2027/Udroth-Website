@@ -3,6 +3,7 @@ import Base from "../../layouts/Base.astro";
 import { getCollection, render } from "astro:content";
 import FacetChips from "../../components/FacetChips.astro";
 import { displayName } from "../../lib/wikilinks";
+import { capitalize } from "../../lib/archive";
 
 export async function getStaticPaths() {
   const images = await getCollection("images");
@@ -16,9 +17,12 @@ const { Content } = await render(img);
 ---
 
 <Base title={img.data.title}>
-  <article class="image-page">
+  <article class="image-page" data-pagefind-body>
+    <meta data-pagefind-filter="Section[content]" content="Images" />
+    {img.data.subtype && <meta data-pagefind-filter="Image type[content]" content={capitalize(img.data.subtype)} />}
+    {img.data.image_file && <meta data-pagefind-meta="image[content]" content={`/assets/thumbs/${img.data.image_file.replace(/\.[^.]+$/, ".webp")}`} />}
     {img.data.image_file && (
-      <figure>
+      <figure data-pagefind-ignore>
         <img src={`/assets/${img.data.image_file}`} alt={img.data.title} />
       </figure>
     )}
@@ -37,7 +41,7 @@ const { Content } = await render(img);
       </div>
 
       {img.data.tags.length > 0 && (
-        <aside class="block">
+        <aside class="block" data-pagefind-ignore>
           <h3>Themes</h3>
           <div class="tags">
             <FacetChips facet="tags" values={img.data.tags} />
@@ -46,7 +50,7 @@ const { Content } = await render(img);
       )}
 
       {img.data.related_texts.length > 0 && (
-        <aside class="block">
+        <aside class="block" data-pagefind-ignore>
           <h3>Related Texts</h3>
           <ul>
             {img.data.related_texts.map((t) => {

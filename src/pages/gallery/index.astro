@@ -1,19 +1,65 @@
 ---
 import Base from "../../layouts/Base.astro";
+import FilterBar from "../../components/FilterBar.astro";
 import { getCollection } from "astro:content";
+import { IMAGE_TYPES, capitalize, isoDay, formatAdded, addedMonth, fold } from "../../lib/archive";
 
-const allImages = (await getCollection("images")).filter((i) => i.data.publish);
+const allImages = (await getCollection("images"))
+  .filter((i) => i.data.publish)
+  .map((i) => ({ entry: i, added: i.data.date_added, month: addedMonth(i.data.date_added) }))
+  .sort((a, b) =>
+    isoDay(b.added).localeCompare(isoDay(a.added)) ||
+    a.entry.data.title.localeCompare(b.entry.data.title, "en"),
+  );
+
+// Types in the canonical order, only those actually used
+const typeOptions = IMAGE_TYPES.filter((t) => allImages.some((i) => i.entry.data.subtype === t))
+  .map((t) => ({ value: t, label: capitalize(t) }));
+
+const monthOptions = [...new Map(
+  allImages.filter((i) => i.month).map((i) => [i.month!.value, i.month!.label]),
+)]
+  .sort((a, b) => b[0].localeCompare(a[0]))
+  .map(([value, label]) => ({ value, label }));
 ---
 
 <Base title="Gallery">
   <h1>Gallery</h1>
-  <p style="color: var(--text-muted); margin-bottom: 2rem;">
+  <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
     Maps, illustrations, and artifacts from Udroth.
   </p>
 
-  <div class="gallery-grid">
-    {allImages.map((img) => (
-      <a href={`/gallery/${img.id}`} class="gallery-card">
+  <FilterBar
+    target="image-list"
+    noun={["image", "images"]}
+    selects={[
+      { key: "type", label: "Type", options: typeOptions, anyLabel: "All types" },
+      { key: "added", label: "Uploaded", options: monthOptions, anyLabel: "Any time" },
+    ]}
+    defaultSort="added:desc"
+    sorts={[
+      { value: "added:desc", label: "Upload date — newest first" },
+      { value: "added:asc", label: "Upload date — oldest first" },
+      { value: "name:asc", label: "Name — A to Z" },
+      { value: "name:desc", label: "Name — Z to A" },
+      { value: "type:asc", label: "Type — A to Z" },
+      { value: "type:desc", label: "Type — Z to A" },
+    ]}
+  />
+
+  <div class="gallery-grid" id="image-list">
+    {allImages.map(({ entry: img, added, month }) => (
+      <a
+        href={`/gallery/${img.id}`}
+        class="gallery-card"
+        data-item
+        data-name={fold(img.data.title)}
+        data-f-type={img.data.subtype}
+        data-f-added={month?.value ?? ""}
+        data-s-name={fold(img.data.title)}
+        data-s-type={img.data.subtype}
+        data-s-added={isoDay(added)}
+      >
         {img.data.image_file && (
           <img
             src={`/assets/thumbs/${img.data.image_file.replace(/\.[^.]+$/, '.webp')}`}
@@ -22,11 +68,18 @@ const allImages = (await getCollection("images")).filter((i) => i.data.publish);
           />
         )}
         <div class="gallery-info">
+          {img.data.subtype && <span class="img-type">{img.data.subtype}</span>}
           <h3>{img.data.title}</h3>
           {img.data.caption && <p>{img.data.caption}</p>}
+          {added && <p class="added">Added {formatAdded(added)}</p>}
         </div>
       </a>
     ))}
+  </div>
+
+  <div class="fb-empty" data-empty-for="image-list" hidden>
+    <p>No images match these filters.</p>
+    <button type="button" class="fb-reset" data-reset-for="image-list">Clear filters</button>
   </div>
 </Base>
 
@@ -63,5 +116,18 @@ const allImages = (await getCollection("images")).filter((i) => i.data.publish);
     font-size: 0.85rem;
     color: var(--text-muted);
     line-height: 1.4;
+  }
+  .img-type {
+    display: block;
+    font-family: "Cinzel", serif;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.15rem;
+  }
+  .gallery-info p.added {
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
   }
 </style>

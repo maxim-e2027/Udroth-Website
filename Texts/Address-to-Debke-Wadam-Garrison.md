@@ -21,6 +21,7 @@ tags:
   - "[[Zurkan Invasions]]"
 related_images:
   - "[[Izbred-Map]]"
+date_added: 2026-08-27
 publish: true
 ---
 

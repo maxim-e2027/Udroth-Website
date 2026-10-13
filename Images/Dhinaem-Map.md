@@ -18,5 +18,6 @@ tags:
   - "[[Regional Map]]"
 related_texts:
   - "[[Proclamation-of-the-Third-Aethliri-Empire]]"
+date_added: 2026-08-27
 publish: true
 ---

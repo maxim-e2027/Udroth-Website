@@ -1,0 +1,63 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Search" description="Search the full text of every document, image and encyclopedia article in the Archives of Udroth.">
+  <h1>Search</h1>
+  <p class="search-intro">
+    Searches the full text of every published document, image and encyclopedia article.
+  </p>
+
+  <div id="search" class="udroth-search"></div>
+  <noscript><p class="search-note">Search needs JavaScript enabled.</p></noscript>
+
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <script is:inline>
+    (function () {
+      var el = document.getElementById("search");
+      if (typeof PagefindUI === "undefined") {
+        el.innerHTML =
+          '<p class="search-note">The search index is created when the site is built (<code>npm run build</code>). It is not available in <code>npm run dev</code>.</p>';
+        return;
+      }
+      var ui = new PagefindUI({
+        element: "#search",
+        showSubResults: true,
+        showImages: true,
+        resetStyles: false,
+        pageSize: 10,
+        translations: { placeholder: "Search the archive…", zero_results: "Nothing in the archive matches [SEARCH_TERM]" },
+      });
+      var q = new URLSearchParams(location.search).get("q");
+      if (q) ui.triggerSearch(q);
+    })();
+  </script>
+</Base>
+
+<style is:global>
+  .search-intro { color: var(--text-muted); margin-bottom: 1.5rem; }
+  .search-note { color: var(--text-muted); font-style: italic; }
+  .udroth-search {
+    --pagefind-ui-scale: 0.9;
+    --pagefind-ui-primary: var(--accent-dark);
+    --pagefind-ui-text: var(--text);
+    --pagefind-ui-background: var(--bg);
+    --pagefind-ui-border: var(--border);
+    --pagefind-ui-tag: var(--bg-dark);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 0;
+    --pagefind-ui-image-border-radius: 0;
+    --pagefind-ui-font: "Lora", Georgia, serif;
+  }
+  .udroth-search .pagefind-ui__search-input { font-family: "Lora", Georgia, serif; }
+  .udroth-search .pagefind-ui__filter-name,
+  .udroth-search .pagefind-ui__filter-legend,
+  .udroth-search .pagefind-ui__message {
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.04em;
+  }
+  .udroth-search .pagefind-ui__result-link { color: var(--accent-dark); }
+  .udroth-search mark { background: #ead7a8; color: inherit; }
+  .udroth-search .pagefind-ui__result-thumb { width: 10rem; }
+</style>

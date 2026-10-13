@@ -23,6 +23,7 @@ tags: []
 related_images:
   - "[[Izbred-Map]]"
   - "[[Dhinaem-Map]]"
+date_added: 2026-08-27
 publish: true
 ---
 

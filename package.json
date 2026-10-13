@@ -6,7 +6,7 @@
     "gen-thumbs": "sh scripts/gen-thumbs.sh",
     "sync-assets": "npm run gen-thumbs && rm -rf public/assets && mkdir -p public/assets && cp -r assets/* public/assets/",
     "dev": "npm run sync-assets && astro dev",
-    "build": "npm run sync-assets && astro build",
+    "build": "npm run sync-assets && astro build && pagefind --site dist",
     "preview": "astro preview",
     "deploy": "wrangler deploy"
   },
@@ -15,6 +15,7 @@
     "astro": "^5.0.0"
   },
   "devDependencies": {
+    "pagefind": "^1.5.2",
     "remark-wiki-link": "^2.0.1",
     "wrangler": "^4.0.0"
   }

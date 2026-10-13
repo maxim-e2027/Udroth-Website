@@ -44,7 +44,9 @@ const related = await Promise.all(
     <a href={`/encyclopedia/${cat}`} style="color: var(--text-muted); font-size: 0.85rem;">{CATEGORY_LABELS[cat]}</a>
   </p>
 
-  <article>
+  <article data-pagefind-body>
+    <meta data-pagefind-filter="Section[content]" content="Encyclopedia" />
+    <meta data-pagefind-filter="Category[content]" content={CATEGORY_LABELS[cat]} />
     <header class="article-header">
       <span class="category-pill">{CATEGORY_LABELS[cat]}</span>
       <h1>{article.data.title}</h1>
@@ -56,7 +58,7 @@ const related = await Promise.all(
     </div>
 
     {related.length > 0 && (
-      <aside class="block">
+      <aside class="block" data-pagefind-ignore>
         <h3>Related articles</h3>
         <ul>
           {related.map((r) => (
@@ -69,7 +71,7 @@ const related = await Promise.all(
     )}
 
     {texts.length > 0 && (
-      <aside class="block">
+      <aside class="block" data-pagefind-ignore>
         <h3>Mentioned in texts</h3>
         <ul>
           {texts.map((t) => (
@@ -84,7 +86,7 @@ const related = await Promise.all(
     )}
 
     {images.length > 0 && (
-      <aside class="block">
+      <aside class="block" data-pagefind-ignore>
         <h3>Related images</h3>
         <ul>
           {images.map((i) => (

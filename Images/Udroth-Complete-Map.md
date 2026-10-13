@@ -21,5 +21,6 @@ tags:
   - "[[Great River]]"
 related_texts:
   - "[[Unified-Magic-a-Manifesto]]"
+date_added: 2026-08-27
 publish: true
 ---

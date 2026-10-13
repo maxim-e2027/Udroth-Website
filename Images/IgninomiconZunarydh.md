@@ -15,5 +15,6 @@ religion:
   - "[[Uranism]]"
 tags: []
 related_texts: []
+date_added: 2026-08-27
 publish: true
 ---

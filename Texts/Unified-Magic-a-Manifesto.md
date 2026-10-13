@@ -16,6 +16,7 @@ tags:
   - "[[Metatheology]]"
 related_images:
   - "[[Udroth-Complete-Map]]"
+date_added: 2026-08-27
 publish: true
 ---
 

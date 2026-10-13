@@ -1,0 +1,155 @@
+---
+/**
+ * Generic filter + sort bar for a list of cards.
+ *
+ * Every card inside the list (#target) must carry:
+ *   data-item
+ *   data-name="<folded title>"            — for the name search box
+ *   data-f-<key>="value|value"            — one per select filter (pipe-separated)
+ *   data-year="226"                        — optional, for the year range
+ *   data-s-<field>="..."                   — sort keys (number or text; empty = sorts last)
+ *
+ * Logic lives in src/scripts/filter-bar.ts. State is mirrored in the URL (?author=…&sort=…).
+ */
+interface Option { value: string; label: string }
+interface Select { key: string; label: string; options: Option[]; anyLabel?: string }
+interface Props {
+  target: string;               // id of the list element
+  searchLabel?: string;         // label for name search box
+  selects: Select[];
+  yearRange?: { dependsOn: string }; // year from/to, active only when that select has a value
+  sorts: Option[];              // value = "<field>:asc|desc"
+  defaultSort: string;
+  noun: [string, string];       // ["text", "texts"]
+}
+const { target, searchLabel = "Name", selects, yearRange, sorts, defaultSort, noun } = Astro.props;
+---
+
+<form class="filter-bar" data-filter-bar data-target={target} data-noun={noun.join("|")} hidden>
+  <div class="fb-row">
+    <label class="fb-field fb-search">
+      <span>{searchLabel}</span>
+      <input type="search" name="q" data-default="" placeholder="Type to filter by name…" autocomplete="off" />
+    </label>
+
+    {selects.map((s) => (
+      <label class="fb-field">
+        <span>{s.label}</span>
+        <select name={s.key} data-filter={s.key} data-default="">
+          <option value="">{s.anyLabel ?? "All"}</option>
+          {s.options.map((o) => <option value={o.value}>{o.label}</option>)}
+        </select>
+      </label>
+    ))}
+
+    {yearRange && (
+      <fieldset class="fb-field fb-years" data-year-range data-depends-on={yearRange.dependsOn}>
+        <span>Year within age</span>
+        <div>
+          <input type="number" name="from" min="0" step="1" placeholder="from" data-default="" inputmode="numeric" />
+          <span class="fb-dash">–</span>
+          <input type="number" name="to" min="0" step="1" placeholder="to" data-default="" inputmode="numeric" />
+        </div>
+      </fieldset>
+    )}
+
+    <label class="fb-field">
+      <span>Sort by</span>
+      <select name="sort" data-sort data-default={defaultSort}>
+        {sorts.map((o) => <option value={o.value} selected={o.value === defaultSort}>{o.label}</option>)}
+      </select>
+    </label>
+  </div>
+
+  <div class="fb-status">
+    <span data-count aria-live="polite"></span>
+    <button type="button" class="fb-reset" data-reset>Clear filters</button>
+    <a class="fb-fulltext" data-fulltext href="/search">Search inside the documents →</a>
+  </div>
+</form>
+
+<script>
+  import { initFilterBars } from "../scripts/filter-bar";
+  initFilterBars();
+</script>
+
+<style is:global>
+  .filter-bar {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1rem 1.2rem 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .filter-bar[hidden] { display: none; }
+  .fb-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.2rem;
+    align-items: flex-end;
+  }
+  .fb-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+    border: none;
+  }
+  .fb-field > span {
+    font-family: "Cinzel", serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .fb-search { flex: 1 1 220px; }
+  .filter-bar input,
+  .filter-bar select {
+    font-family: "Lora", Georgia, serif;
+    font-size: 0.88rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 0.4rem 0.55rem;
+    min-height: 2.2rem;
+  }
+  .filter-bar select { padding-right: 1.6rem; max-width: 16rem; }
+  .filter-bar input:focus,
+  .filter-bar select:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: -1px;
+  }
+  .fb-years > div { display: flex; align-items: center; gap: 0.35rem; }
+  .fb-years input { width: 5.2rem; }
+  .fb-years[data-disabled] { opacity: 0.45; }
+  .fb-dash { color: var(--text-muted); }
+  .fb-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 1.2rem;
+    margin-top: 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .fb-reset {
+    font: inherit;
+    color: var(--accent);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+  }
+  .fb-reset:hover { border-bottom-color: var(--accent); }
+  .fb-reset[hidden] { display: none; }
+  .fb-fulltext { margin-left: auto; }
+  .fb-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .fb-empty[hidden] { display: none; }
+  [data-item][hidden] { display: none !important; }
+</style>

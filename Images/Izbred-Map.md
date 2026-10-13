@@ -21,5 +21,6 @@ tags:
 related_texts:
   - "[[Proclamation-of-the-Third-Aethliri-Empire]]"
   - "[[Address-to-Debke-Wadam-Garrison]]"
+date_added: 2026-08-27
 publish: true
 ---

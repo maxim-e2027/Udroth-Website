@@ -1,32 +1,122 @@
 ---
 import Base from "../../layouts/Base.astro";
+import FilterBar from "../../components/FilterBar.astro";
 import { getCollection } from "astro:content";
 import { displayName } from "../../lib/wikilinks";
+import {
+  AGES, parseInWorldDate, inWorldSortKey, isoDay, formatAdded, addedMonth, fold,
+} from "../../lib/archive";
 
-const allTexts = (await getCollection("texts")).filter((t) => t.data.publish);
+const allTexts = (await getCollection("texts"))
+  .filter((t) => t.data.publish)
+  .map((t) => {
+    const author = t.data.author ? displayName(t.data.author) : "";
+    const iw = parseInWorldDate(t.data.date_in_world);
+    return {
+      entry: t,
+      author,
+      iw,
+      iwKey: inWorldSortKey(iw),
+      added: t.data.date_added,
+      month: addedMonth(t.data.date_added),
+    };
+  })
+  // Default order (newest upload first, then name) so the page is sensible without JS
+  .sort((a, b) =>
+    isoDay(b.added).localeCompare(isoDay(a.added)) ||
+    a.entry.data.title.localeCompare(b.entry.data.title, "en"),
+  );
+
+const authorOptions = [...new Set(allTexts.map((t) => t.author).filter(Boolean))]
+  .sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }))
+  .map((a) => ({ value: a, label: a }));
+
+const ageOptions = AGES.filter((age) => allTexts.some((t) => t.iw?.age === age))
+  .map((age) => ({ value: age, label: age }));
+if (allTexts.some((t) => !t.iw)) ageOptions.push({ value: "unknown", label: "Undated" });
+
+const monthOptions = [...new Map(
+  allTexts.filter((t) => t.month).map((t) => [t.month!.value, t.month!.label]),
+)]
+  .sort((a, b) => b[0].localeCompare(a[0]))
+  .map(([value, label]) => ({ value, label }));
 ---
 
 <Base title="Texts">
   <h1>Texts</h1>
-  <p style="color: var(--text-muted); margin-bottom: 2rem;">
+  <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
     Stories, proclamations, and chronicles from within the world.
   </p>
 
-  <div class="card-grid">
-    {allTexts.map((text) => (
-      <a href={`/texts/${text.id}`} class="card">
+  <FilterBar
+    target="text-list"
+    noun={["text", "texts"]}
+    selects={[
+      { key: "author", label: "Author", options: authorOptions, anyLabel: "All authors" },
+      { key: "age", label: "In-world date", options: ageOptions, anyLabel: "All ages" },
+      { key: "added", label: "Uploaded", options: monthOptions, anyLabel: "Any time" },
+    ]}
+    yearRange={{ dependsOn: "age" }}
+    defaultSort="added:desc"
+    sorts={[
+      { value: "added:desc", label: "Upload date — newest first" },
+      { value: "added:asc", label: "Upload date — oldest first" },
+      { value: "inworld:asc", label: "In-world date — earliest first" },
+      { value: "inworld:desc", label: "In-world date — latest first" },
+      { value: "name:asc", label: "Name — A to Z" },
+      { value: "name:desc", label: "Name — Z to A" },
+      { value: "author:asc", label: "Author — A to Z" },
+      { value: "author:desc", label: "Author — Z to A" },
+    ]}
+  />
+
+  <div class="card-grid" id="text-list">
+    {allTexts.map(({ entry: text, author, iw, iwKey, added, month }) => (
+      <a
+        href={`/texts/${text.id}`}
+        class="card"
+        data-item
+        data-name={fold(text.data.title)}
+        data-f-author={author}
+        data-f-age={iw ? iw.age : "unknown"}
+        data-f-added={month?.value ?? ""}
+        data-year={iw?.year ?? ""}
+        data-s-name={fold(text.data.title)}
+        data-s-author={fold(author)}
+        data-s-inworld={iwKey ?? ""}
+        data-s-added={isoDay(added)}
+      >
         <h3>{text.data.title}</h3>
         <div class="meta">
           {text.data.subtype && <span>{text.data.subtype}</span>}
           {text.data.date_in_world && <span> · {text.data.date_in_world}</span>}
         </div>
+        {author && <div class="meta byline">by {author}</div>}
         {text.data.excerpt && <p class="excerpt">{text.data.excerpt}</p>}
         <div class="tags">
           {text.data.era.map((e) => <span class="tag">{displayName(e)}</span>)}
           {text.data.culture.map((c) => <span class="tag">{displayName(c)}</span>)}
           {text.data.religion.map((r) => <span class="tag">{displayName(r)}</span>)}
         </div>
+        {added && <div class="added">Added {formatAdded(added)}</div>}
       </a>
     ))}
   </div>
+
+  <div class="fb-empty" data-empty-for="text-list" hidden>
+    <p>No texts match these filters.</p>
+    <button type="button" class="fb-reset" data-reset-for="text-list">Clear filters</button>
+  </div>
 </Base>
+
+<style>
+  .card { display: flex; flex-direction: column; }
+  .byline { margin-top: -0.4rem; font-style: italic; }
+  .added {
+    margin-top: auto;
+    padding-top: 0.8rem;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+</style>
