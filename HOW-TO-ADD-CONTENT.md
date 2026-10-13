@@ -43,7 +43,8 @@
    - `subtype` — жанр: `story | legend | chronicle | myth | letter | manifesto | proclamation | speech`
    - `author: "[[Имя автора]]"` (должен существовать в `Authors/`)
    - `excerpt` — 1-2 предложения для карточки
-   - `date_in_world` — например `"733 Age of History"`
+   - `date_in_world` — например `"733 Age of History"`. Допустимые формы: `"226 Age of Chaos"`, `"c. 226 Age of Chaos"` (примерно), `"Age of Chaos"` (только эпоха), `"Unknown"`. Эпохи по порядку: Age of Creation → Age of History → Age of Chaos, год в каждой начинается с 1. Другой формат — билд упадёт с понятной ошибкой.
+   - `date_added` — дата загрузки на сайт, `2026-10-13` (без кавычек). По ней работает сортировка «новые сверху» и фильтр «Uploaded»
    - `place`, `era`, `culture`, `politics`, `religion` — все **массивы wikilinks** `["[[Aethlir]]"]`
    - `tags` — тоже массив wikilinks (теперь = ссылки на статьи Themes)
    - `related_images: ["[[Image-Slug]]"]`
@@ -59,7 +60,8 @@
 1. Положи файл в `assets/` И в `public/assets/` (две копии)
 2. Скопируй `Templates/Image.md` → сохрани в `Images/Название.md`
 3. Заполни frontmatter:
-   - `title`, `subtype` (`map | illustration | artifact | portrait | scene | symbol`)
+   - `title`, `subtype` — строго одно из: `map | artifact | book page | illustration | portrait | scene | symbol` (список задаётся в `src/lib/archive.ts`, новый тип добавлять туда)
+   - `date_added` — дата загрузки на сайт, `2026-10-13`
    - `image_file` — имя файла из `assets/`
    - `caption` — подпись
    - 5 фасетов + `tags` — массивы wikilinks (как в Text)
@@ -102,3 +104,12 @@ git push
 - На странице статьи автоматически появляется *Mentioned in texts* / *Related images* — это обратные ссылки
 
 Имена в `[[двойных скобках]]` должны точно совпадать с `title` целевого файла.
+
+---
+
+## Фильтры, сортировка и поиск
+
+- **Texts** — фильтры: имя, автор, эпоха (+ диапазон лет внутри эпохи), месяц загрузки. Сортировка: дата загрузки, внутримировая дата, имя, автор (в обе стороны).
+- **Gallery** — фильтры: имя, тип, месяц загрузки. Сортировка: дата загрузки, имя, тип.
+- Состояние фильтров попадает в адрес страницы (`/texts?age=Age+of+Chaos&sort=inworld:asc`) — такой вид можно отправить ссылкой.
+- **Search** (`/search`) — полнотекстовый поиск Pagefind по текстам, изображениям и энциклопедии. Индекс строится при `npm run build`; в `npm run dev` поиск не работает — это нормально.

@@ -226,6 +226,19 @@ const socialImageURL = new URL(image, Astro.site);
     color: var(--accent);
   }
 
+  @media (max-width: 760px) {
+    .site-header-main {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.8rem 1rem;
+    }
+    .site-header nav {
+      flex-wrap: wrap;
+      gap: 0.3rem 1rem;
+    }
+  }
+
   /* ── Footer ── */
   footer {
     text-align: center;

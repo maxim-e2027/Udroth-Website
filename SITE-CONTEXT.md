@@ -131,7 +131,8 @@ type: text
 subtype: ""               # story | legend | chronicle | myth | letter | manifesto | proclamation | speech
 author: "[[Author Name]]" # wikilink, не массив (один автор)
 excerpt: ""
-date_in_world: ""
+date_in_world: ""         # "226 Age of Chaos" | "c. 226 Age of Chaos" | "Age of Chaos" | "Unknown"
+date_added: 2026-10-13    # дата загрузки на сайт
 place:    ["[[...]]"]
 era:      ["[[...]]"]     # стал массивом
 culture:  ["[[...]]"]
@@ -146,7 +147,8 @@ publish: false
 ```yaml
 title: ""
 type: image
-subtype: ""               # map | illustration | artifact | portrait | scene | symbol
+subtype: ""               # строго: map | artifact | book page | illustration | portrait | scene | symbol
+date_added: 2026-10-13    # дата загрузки на сайт
 image_file: ""
 caption: ""
 place / era / culture / politics / religion / tags: массивы wikilinks
@@ -203,7 +205,7 @@ _Актуализировано 2026-08-29, вторая правка того �
 ## Следующие задачи (открытые)
 
 1. **Наполнение статей** — 28 из 33 stub-ов пусты (список — выше). В `~/Documents/Claude/Projects/Worldbuilding/` есть неиспользованные источники: `WorldbuildingContext.md` (регионы, народы, космология, история) и два docx — `History of Urmyzhar Empire.docx`, `Peoples of Dhinaem.docx` — можно опираться на них вместо придумывания с нуля.
-2. **Поиск и фильтры** — на сайте нет ни полнотекстового поиска, ни фильтров по фасетам (`texts/index.astro`, `gallery/index.astro` — статичные сетки без JS). План: Pagefind для полнотекстового поиска + UI-чипсы по существующим фасетам + новое поле `date_added` во frontmatter для сортировки по новизне (обсуждено с Alexey 2026-08-29).
+2. ~~**Поиск и фильтры**~~ — сделано 2026-10-13: `date_added` (Text/Image), валидация `date_in_world` (Creation → History → Chaos, год с 1 в каждой эпохе), фиксированный список типов изображений (`src/lib/archive.ts`), панель фильтров/сортировки (`src/components/FilterBar.astro` + `src/scripts/filter-bar.ts`), Pagefind-поиск на `/search` (build: `astro build && pagefind --site dist`). Возможное развитие: фильтры по фасетам place/culture/religion.
 3. **Кастомные шрифты** — резьба по камню, чеканка по металлу, граффити. Calligraphr → FontForge.
 4. **Раздел Geography** — интерактивная карта-хаб (SVG или Leaflet) поверх существующих Geography-статей.
 5. **Продвижение** — SEO-база (sitemap, OG-теги) готова; см. чек-лист сообществ для публикации.
