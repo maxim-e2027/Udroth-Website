@@ -28,11 +28,11 @@ const { Content } = await render(img);
     )}
 
     <div class="image-details">
-      {img.data.subtype && <span class="subtype">{img.data.subtype}</span>}
+      {img.data.subtype && <span class="subtype" data-pagefind-ignore>{img.data.subtype}</span>}
       <h1>{img.data.title}</h1>
       {img.data.caption && <p class="caption">{img.data.caption}</p>}
 
-      <div class="tags">
+      <div class="tags" data-pagefind-ignore>
         <FacetChips facet="place" values={img.data.place} />
         <FacetChips facet="era" values={img.data.era} />
         <FacetChips facet="culture" values={img.data.culture} />

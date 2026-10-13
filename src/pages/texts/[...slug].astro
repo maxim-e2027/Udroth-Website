@@ -24,13 +24,13 @@ const iw = parseInWorldDate(text.data.date_in_world);
     {authorName && <meta data-pagefind-filter="Author[content]" content={authorName} />}
     {iw && <meta data-pagefind-filter="In-world age[content]" content={iw.age} />}
     <header class="text-header">
-      {text.data.subtype && <span class="subtype">{text.data.subtype}</span>}
+      {text.data.subtype && <span class="subtype" data-pagefind-ignore>{text.data.subtype}</span>}
       <h1>{text.data.title}</h1>
       <div class="meta-row">
         {authorName && <span>by {authorName}</span>}
         {text.data.date_in_world && <span> · {text.data.date_in_world}</span>}
       </div>
-      <div class="tags">
+      <div class="tags" data-pagefind-ignore>
         <FacetChips facet="era" values={text.data.era} />
         <FacetChips facet="culture" values={text.data.culture} />
         <FacetChips facet="religion" values={text.data.religion} />

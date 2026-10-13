@@ -59,5 +59,24 @@ import Base from "../layouts/Base.astro";
   }
   .udroth-search .pagefind-ui__result-link { color: var(--accent-dark); }
   .udroth-search mark { background: #ead7a8; color: inherit; }
-  .udroth-search .pagefind-ui__result-thumb { width: 10rem; }
+  .udroth-search fieldset { border: none; }
+  .udroth-search .pagefind-ui__filter-panel { border-right: 1px solid var(--border); padding-right: 1rem; }
+  /* Texts and articles have no picture: don't leave an empty thumbnail column */
+  .udroth-search .pagefind-ui__result-thumb:not(:has(img)) { display: none; }
+  .udroth-search .pagefind-ui__search-clear {
+    font-family: "Cinzel", serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: transparent;
+    border: none;
+  }
+  .udroth-search .pagefind-ui__button {
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.06em;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--accent-dark);
+  }
 </style>

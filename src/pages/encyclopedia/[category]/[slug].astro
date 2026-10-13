@@ -48,7 +48,7 @@ const related = await Promise.all(
     <meta data-pagefind-filter="Section[content]" content="Encyclopedia" />
     <meta data-pagefind-filter="Category[content]" content={CATEGORY_LABELS[cat]} />
     <header class="article-header">
-      <span class="category-pill">{CATEGORY_LABELS[cat]}</span>
+      <span class="category-pill" data-pagefind-ignore>{CATEGORY_LABELS[cat]}</span>
       <h1>{article.data.title}</h1>
       {article.data.summary && <p class="summary">{article.data.summary}</p>}
     </header>
