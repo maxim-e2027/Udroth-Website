@@ -57,7 +57,9 @@
 
 ## Добавить изображение
 
-1. Положи файл в `assets/` И в `public/assets/` (две копии)
+1. Положи файл в `assets/` (в `public/assets/` он скопируется сам при `npm run dev` / `npm run build`)
+   - Скрипт `npm run gen-thumbs` (нужен Python + Pillow: `pip3 install Pillow`) создаёт из оригинала две облегчённые копии: `assets/thumbs/` (600 px, карточки галереи) и `assets/display/` (до 2400 px, картинка на странице изображения). Оригинал не меняется — на странице есть ссылка «Open full resolution».
+   - Если копий нет, страница просто покажет оригинал (работает, но тяжёлые карты грузятся медленно). Сгенерированные копии надо закоммитить вместе с оригиналом.
 2. Скопируй `Templates/Image.md` → сохрани в `Images/Название.md`
 3. Заполни frontmatter:
    - `title`, `subtype` — строго одно из: `map | artifact | book page | illustration | portrait | scene | symbol` (список задаётся в `src/lib/archive.ts`, новый тип добавлять туда)

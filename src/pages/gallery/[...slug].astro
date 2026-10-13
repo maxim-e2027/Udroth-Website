@@ -4,6 +4,8 @@ import { getCollection, render } from "astro:content";
 import FacetChips from "../../components/FacetChips.astro";
 import { displayName } from "../../lib/wikilinks";
 import { capitalize } from "../../lib/archive";
+import fs from "node:fs";
+import path from "node:path";
 
 export async function getStaticPaths() {
   const images = await getCollection("images");
@@ -14,6 +16,15 @@ export async function getStaticPaths() {
 
 const { img } = Astro.props;
 const { Content } = await render(img);
+
+// Show a ≤2400px WebP on the page (assets/display/), link to the untouched original.
+const file = img.data.image_file;
+const base = file.replace(/\.[^.]+$/, "");
+const hasDisplay = !!file && fs.existsSync(path.join("assets", "display", `${base}.webp`));
+const displaySrc = hasDisplay ? `/assets/display/${base}.webp` : `/assets/${file}`;
+const originalPath = path.join("assets", file);
+const originalMB = file && fs.existsSync(originalPath) ? fs.statSync(originalPath).size / 1e6 : 0;
+const originalSize = originalMB >= 1 ? `${originalMB.toFixed(1)} MB` : `${Math.max(1, Math.round(originalMB * 1000))} KB`;
 ---
 
 <Base title={img.data.title}>
@@ -23,7 +34,13 @@ const { Content } = await render(img);
     {img.data.image_file && <meta data-pagefind-meta="image[content]" content={`/assets/thumbs/${img.data.image_file.replace(/\.[^.]+$/, ".webp")}`} />}
     {img.data.image_file && (
       <figure data-pagefind-ignore>
-        <img src={`/assets/${img.data.image_file}`} alt={img.data.title} />
+        <a href={`/assets/${file}`} class="full-res" target="_blank" rel="noopener" title="Open full resolution">
+          <img src={displaySrc} alt={img.data.title} decoding="async" />
+        </a>
+        <figcaption>
+          <a href={`/assets/${file}`} target="_blank" rel="noopener">Open full resolution</a>
+          {originalMB > 0 && <span> · {originalSize}</span>}
+        </figcaption>
       </figure>
     )}
 
@@ -74,6 +91,22 @@ const { Content } = await render(img);
     background: #2a2318;
     padding: 1rem;
   }
+  .image-page figure .full-res {
+    display: inline-block;
+    border-bottom: none;
+    cursor: zoom-in;
+  }
+  .image-page figure figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: #b8a888;
+  }
+  .image-page figure figcaption a {
+    color: #e3cfa4;
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.05em;
+  }
+  .image-page figure figcaption a:hover { border-bottom-color: #e3cfa4; }
   .image-page figure img {
     max-width: 100%;
     max-height: 70vh;
